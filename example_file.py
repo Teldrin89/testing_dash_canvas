@@ -2,6 +2,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_canvas as dc
 
 asset_style = ['assets/style.css']
 
@@ -25,7 +26,9 @@ app.layout = html.Div(children=[
                 'title': 'Dash Data Visualization'
             }
         }
-    )
+    ),
+    html.H5("Dash Cnavas testing"),
+    dc.DashCanvas(id='canvas-1')
 ])
 
 if __name__ == '__main__':
