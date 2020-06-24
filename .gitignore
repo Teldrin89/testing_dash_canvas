@@ -1,2 +1,3 @@
 p3_venv/
 node_modules/
+__pycache__/
