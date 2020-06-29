@@ -8,9 +8,12 @@ import vtk_python_script as vps
 # import vtk
 
 asset_style = ['assets/style.css']
-js_script = [{'src': 'assets/testing_vtk.js', 'type': 'module'}]
+js_script = [
+    {'src': 'https://unpkg.com/vtk.js@14.10.1/dist/vtk.js'}]
 
-app = dash.Dash(__name__, external_stylesheets=asset_style)
+app = dash.Dash(
+    __name__, 
+    external_stylesheets=asset_style)
 
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
@@ -18,7 +21,7 @@ app.layout = html.Div(children=[
     html.Div(children='''
         Dash: A web application framework for Python
     '''),
-
+    dcc.RangeSlider(id="slider", className="slider"),
     dcc.Graph(
         id='example-graph',
         figure={
@@ -33,7 +36,11 @@ app.layout = html.Div(children=[
     ),
     html.H5("Dash Cnavas testing"),
     # dc.DashCanvas(id='canvas-1')
-    html.Canvas(id="html-canvas"),
+    # html.Canvas(id="html-canvas"),
+    html.Iframe(
+        src="https://kitware.github.io/vtk-js/examples/GeometryViewer/GeometryViewer.html",
+        height=300,
+        width=600),
     dcc.Loading(
         html.Button(id="test-button")
     )
@@ -52,7 +59,7 @@ def testing_button(clicks):
         output = "Button"
     else:
         output = "Button {}".format(clicks)
-        vps.main()
+        # vps.main()
     
     return output
 
