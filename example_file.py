@@ -5,6 +5,7 @@ import dash_html_components as html
 import dash_canvas as dc
 from dash.dependencies import Input, Output, State
 import vtk_python_script as vps
+from flask import send_file
 # import vtk
 
 asset_style = ['assets/style.css']
@@ -14,6 +15,9 @@ js_script = [
 app = dash.Dash(
     __name__, 
     external_stylesheets=asset_style)
+
+# HTTPS addresses generation for additional JS/HTML scripts
+# use send_file from flask to send the new HTTPS path to files
 
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
@@ -37,8 +41,10 @@ app.layout = html.Div(children=[
     html.H5("Dash Cnavas testing"),
     # dc.DashCanvas(id='canvas-1')
     # html.Canvas(id="html-canvas"),
+    # Testing different src for iframe - local html file
     html.Iframe(
-        src="https://kitware.github.io/vtk-js/examples/GeometryViewer/GeometryViewer.html",
+        # src="https://kitware.github.io/vtk-js/examples/GeometryViewer/GeometryViewer.html",
+        src="assets/geom_view.html",
         height=300,
         width=600),
     dcc.Loading(
