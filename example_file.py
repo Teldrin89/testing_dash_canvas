@@ -43,8 +43,8 @@ app.layout = html.Div(children=[
     # html.Canvas(id="html-canvas"),
     # Testing different src for iframe - local html file
     html.Iframe(
-        # src="https://kitware.github.io/vtk-js/examples/GeometryViewer/GeometryViewer.html",
-        src="assets/geom_view.html",
+        src="https://kitware.github.io/vtk-js/examples/GeometryViewer/GeometryViewer.html",
+        # src="assets/geom_view.html",
         height=300,
         width=600),
     dcc.Loading(
@@ -65,7 +65,7 @@ def testing_button(clicks):
         output = "Button"
     else:
         output = "Button {}".format(clicks)
-        # vps.main()
+        vps.main()
     
     return output
 
