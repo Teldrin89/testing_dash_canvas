@@ -16,6 +16,32 @@ def main():
     print("check for poly data read")
     print(type(poly_data))
 
+    # Trial setting a 3D mesh for loaded poly data using Delaunay method
+    dela = vtk.vtkDelaunay3D()
+    print("vtkDelaunay3D variable set")
+    dela.SetInputData(poly_data)
+    print("input data set")
+    # dela.SetTolerance(1)
+    print("tolerance set")
+    mapMesh = vtk.vtkPolyDataMapper()
+    print("vtk poly data mapper set for mesh")
+    mapMesh.SetInputConnection(dela.GetOutputPort())
+    print("mapper input data set with mesh - through output port")
+    meshActor = vtk.vtkActor()
+    print("mesh actor set")
+    meshActor.SetMapper(mapMesh)
+    print("mesh actor set with mesh mapper")
+    meshActor.GetProperty().SetColor(colors.GetColor3d('MidnightBlue'))
+    print("mesh actor set with blue color")
+    # Trial for volume calculation using the mass poroperties
+    # mass = vtk.vtkMassProperties()
+    # mass.SetInputData(dela)
+    # volume = mass.GetVolume()
+    # print("show the volume of model")
+    # print(volume)
+    # print()
+
+
 
     # Create a mapper and actor
     mapper = vtk.vtkPolyDataMapper()
@@ -23,6 +49,7 @@ def main():
     # Changed mapper to read data from loaded vtp file
     mapper.SetInputData(poly_data)
     actor = vtk.vtkActor()
+    # Set different mapper - the one with mesh - for rendering
     actor.SetMapper(mapper)
     actor.GetProperty().SetColor(colors.GetColor3d('Bisque'))
 
@@ -37,6 +64,13 @@ def main():
 
     # Add the actor to the scene
     renderer.AddActor(actor)
+    # Add the actor of mesh to the scene
+    print("before addition of mesh actor - checking it")
+    print(type(meshActor))
+    print("for reference check the std actor")
+    print(type(actor))
+    print()
+    # renderer.AddActor(meshActor)
     renderer.SetBackground(colors.GetColor3d('Black'))
 
     # Render and interact
