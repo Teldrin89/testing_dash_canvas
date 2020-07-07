@@ -1,20 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0">
+    <style type="text/css">
+        .FPSMonitor-module-verticalContainer_kLXah {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .FPSMonitor-module-horizontalContainer_30Q1C {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+
+        .FPSMonitor-module-leftPane_2fsZo {
+            flex: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .FPSMonitor-module-rightPane_3vmsJ {
+            flex: 1;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-auto-rows: 1.5em;
+            grid-column-gap: 5px;
+            grid-row-gap: 2px;
+            padding: 10px;
+        }
+
+        .FPSMonitor-module-title_we2sH {
+            flex: 1;
+            font-weight: bold;
+            padding: 5px 10px 0 10px;
+        }
+
+        .FPSMonitor-module-graph_3s3ZT {
+            flex: none;
+            border: solid 1px black;
+            margin: 10px ;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .FPSMonitor-module-label_2QusZ {
+            font-weight: bold;
+            text-transform: capitalize;
+            text-align: right;
+            align-self: center;
+        }
+
+        .FPSMonitor-module-value_32Pax {
+            font-style: italic;
+            text-align: center;
+            align-self: center;
+        }
+    </style>
+    <style type="text/css">
+        .GeometryViewer-module-button_2d-fc {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 1em;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .GeometryViewer-module-rootController_2ksDX {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            z-index: 1;
+        }
+
+        .GeometryViewer-module-control_nB1zn {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            align-items: center;
+        }
+
+        .GeometryViewer-module-fullScreen_2-J5H {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            background: black;
+            margin: 0;
+            padding: 0;
+            z-index: -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .GeometryViewer-module-fullParentSize_21Kru {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .GeometryViewer-module-bigFileDrop_XkW1U {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+            background-color: white;
+            /* background-image: "/assets/cow.png"; */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            border-radius: 10px;
+            width: 50px;
+            padding: calc(50vh - 2em) calc(50vw - 25px - 2em);
+            cursor: pointer;
+        }
+
+        .GeometryViewer-module-selector_DlHgQ {
+            background: transparent;
+            border: none;
+            margin: 5px;
+            z-index: 1;
+            max-width: 100px;
+            min-width: 100px;
+        }
+
+        label.GeometryViewer-module-selector_DlHgQ {
+            font-size: 12px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        select:focus {
+            outline: none;
+            border: none;
+        }
+
+        .GeometryViewer-module-progress_3_Uls {
+            flex: none;
+            font-size: 50px;
+            color: white;
+            z-index: 1;
+            background: rgba(128,128,128,.5);
+            padding: 20px;
+            border-radius: 10px;
+            -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+        }
+
+        .GeometryViewer-module-dark_3oVaR {
+            color: white;
+        }
+
+        .GeometryViewer-module-dark_3oVaR option {
+            color: black;
+        }
+
+        .GeometryViewer-module-light_273CR {
+            color: black;
+        }
+
+        .GeometryViewer-module-light_273CR option {
+            color: white;
+        }
+
+        .GeometryViewer-module-fpsMonitor_2di4w {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            border: solid 1px gray;
+        }
+    </style>
 </head>
-<body>
-    <script src="https://unpkg.com/vtk.js"></script>
-    <input 
-        type="range" 
-        min="3" 
-        max="50" 
-        value="6" 
-        class="slider" 
-        style="z-index: 100; position: absolute;"
-    />
-    <script src="testing_vtk.js"></script>
+<body style="margin: 0px; padding: 0px;">
+    <div class="content GeometryViewer-module-fullScreen_2-J5H">
+        <div>
+            <div class="GeometryViewer-module-bigFileDrop_XkW1U">
+                <input type="file" multiple accept=".vtp" style="display: none;">
+            </div>
+        </div>
+    </div>
+    <script scr="vtk_js_long.js"></script>
 </body>
-</html>
